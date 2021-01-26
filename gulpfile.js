@@ -7,12 +7,12 @@ const autoprefixer = require('gulp-autoprefixer');
 const rename = require('gulp-rename');
 
 function makeCss(){
-  return gulp.src("main.scss")
+  return gulp.src("./main.scss")
     .pipe(sass())
     .pipe(autoprefixer({cascade:false}))
     .pipe(cleanCSS())
-    .pipe(rename("minifiedCSS.css"))
-    .pipe(gulp.dest(""))   
+    .pipe(rename("./minifiedCSS.css"))
+    .pipe(gulp.dest(""))
 }
 
 function watch(){
@@ -20,9 +20,9 @@ function watch(){
     browser: ["chrome"],
     server: ""
   });
-  gulp.watch("*.scss", makeCss);
-  gulp.watch("*.scss").on('change', browserSync.reload);
-  gulp.watch("*.html").on('change', browserSync.reload);
+  gulp.watch("./*.scss", makeCss);
+  gulp.watch("./*.scss").on('change', browserSync.reload);
+  gulp.watch("./*.html").on('change', browserSync.reload);
   gulp.watch("./js/*.js").on('change', browserSync.reload);
 }
 module.exports.makeCss = makeCss;
