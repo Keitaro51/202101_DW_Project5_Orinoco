@@ -1,0 +1,31 @@
+{
+  "name": "p5_charlot_romain",
+  "version": "1.0.0",
+  "description": "Projet 5 - formation développeur web openclassrooms 01/2021",
+  "main": "index.js",
+  "scripts": {
+    "watch": "node ./node_modules/gulp/bin/gulp.js watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Keitaro51/RomainCharlot_5_23012021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Keitaro51/RomainCharlot_5_23012021/issues"
+  },
+  "homepage": "https://github.com/Keitaro51/RomainCharlot_5_23012021#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.13",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-sass": "^4.1.0",
+    "node-sass": "^5.0.0",
+    "gulp-rename": "^2.0.0"
+  },
+  "browserslist": [
+    "defaults"
+  ]
+}
