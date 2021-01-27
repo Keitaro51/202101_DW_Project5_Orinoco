@@ -1,3 +1,34 @@
-.footer{
-    background: red;
+.nav-link:hover{
+    border-bottom: white solid 2px;
+}
+h1{
+    text-align: center;
+    padding-top: 15px;
+}
+#product_container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 25px;
+    .card{
+        margin: 25px;
+        padding: 15px;
+        img{
+            height: 40%;
+            object-fit: cover;
+            border: solid black 1px;
+        }
+    }
+}
+footer{
+    
+    bottom: 0;
+    width: 100%;
+    p{
+        padding:40px 0 40px 0;
+        margin-bottom: 0;
+    }
+}
+select {
+    margin: 20px;
 }

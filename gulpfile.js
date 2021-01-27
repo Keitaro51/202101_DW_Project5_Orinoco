@@ -12,7 +12,7 @@ function makeCss(){
     .pipe(autoprefixer({cascade:false}))
     .pipe(cleanCSS())
     .pipe(rename("./minifiedCSS.css"))
-    .pipe(gulp.dest(""))
+    .pipe(gulp.dest("./"))
 }
 
 function watch(){
