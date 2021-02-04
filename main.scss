@@ -13,6 +13,7 @@ h1{
     .card{
         margin: 25px;
         padding: 15px;
+        width: 18rem;
         img{
             height: 40%;
             object-fit: cover;
@@ -29,6 +30,45 @@ footer{
         margin-bottom: 0;
     }
 }
+
 select {
-    margin: 20px;
+    margin: 10px;
+}
+
+#cart_summary{
+    text-align: center;
+    table{
+        tr{
+            border:solid black 1px;
+            height:60px
+        }
+        .article_col{
+            width: 50%;
+        }
+        .price_col{
+            width:15%;
+        }
+        .delete_col{
+            width:10%;
+        }
+        th .delete_col{
+            width: 10%;
+        }
+        width:90%;
+        margin: 0 5% 30px 5%;
+        border-collapse : collapse;
+        caption-side:top;
+        border:black solid 1px;
+        img{
+            height:30px;
+            cursor: pointer;
+        }
+    }
+    btn{
+        margin:20px;
+    }
+}
+form{
+    padding: 20px;
+    margin:20px;
 }

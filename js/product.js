@@ -1,51 +1,79 @@
-let request = new XMLHttpRequest();
-request.onreadystatechange = function() {
-    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-        const articlesList = JSON.parse(this.responseText); 
-        showArticlesList(articlesList);
+class Product {
+
+    dataManager;
+    colorChosen;
+    teddy;
+
+    constructor() {
+        this.dataManager = new DataManager();
+        this.showProduct();
     }
-};
-request.open("GET", "http://localhost:3000/api/teddies");
-request.send();
 
-//retrieving the product id in the url
-function showArticlesList(articlesList){
-    console.log(articlesList);
-    let hash = window.location.search;
-    let productId = hash.substr(1); //remove ? symbol into url hash
-    for(let i = 0; i<articlesList.length; i++){
-        if(productId === articlesList[i]._id){
-            let result = i;
-            currentArticle(result);
-        };
-    };
-    //display product corresponding to id
-    function currentArticle(result){
-        console.log(result); 
-        document.getElementById('main').insertAdjacentHTML('afterbegin',`<h1>Bonjour, je suis ${articlesList[result].name}. Tu veux etre mon amis?</h1>`);
+    /**
+     * retrieve product id in url, display article and watch for color choice and add to cart btn
+     */
+    async showProduct() {
+        //find article id in URL
+        const hash = window.location.search;
+        const productId = hash.substr(1);
+
+        //retrieve product info from id
+        this.teddy = await this.dataManager.getProductInfo(productId);
+        //enregistre la valeur sélectionnée par défaut au lancement de la page
+        this.colorChosen = this.teddy.colors[0]; 
+        document.getElementById('main').insertAdjacentHTML('afterbegin', `<h1>Bonjour, je suis ${this.teddy.name.split(' ')[0]}. Tu veux être mon ami?</h1>`);
         document.getElementById('product_container').insertAdjacentHTML(
-            'beforeend', 
-            `<div class="card" style="width: 18rem;">
-                <img src="${articlesList[result].imageUrl}" lazy class="card-img-top" alt="Nounours super classe">
-                <h2 class="card-title">${articlesList[result].name}</h2>
-                <p class="card-text">${articlesList[result].description}</p>
+            'beforeend',
+            `<div class="card">
+                <img src="${this.teddy.imageUrl}" lazy class="card-img-top" alt="Nounours super classe">
+                <h2 class="card-title">${this.teddy.name}</h2>
+                <p class="card-text">${this.teddy.description}</p>
+                <p class="card-text">Prix : ${this.teddy.price} Doudoullars</p>
                 <label for="custon-config">Choisissez une couleur</label>
-                    <select name="color" id="custon-config">
-                        <option value="">--Please choose an option--</option>
-                        
+                    <select name="color" id="custon-config" required>         
                     </select>
-                <a href="./cart.html" class="btn btn-primary">Ajouter au panier</a>
-            </div>`); 
+                <btn id="addcart" class="btn btn-primary">Ajouter au panier</btn>
+            </div>`);
 
-            //display all custom color avaible
-            function color(){
-                for(let color of articlesList[result].colors){
-                    document.getElementById('custon-config').insertAdjacentHTML(
-                        'beforeend',
-                        `<option value="">${color}</option>`);
-                }
-            }
-            color();
-    }     
-   
+        //display all avaible colors in select element
+        for (let color of this.teddy.colors) {
+            document.getElementById('custon-config').insertAdjacentHTML(
+                'beforeend',
+                `<option value="${color}">${color}</option>`);
+        };
+
+        this.colorChoice();
+
+        this.initAddToCart();
+    };
+
+    /**
+     * watch for selected custom color
+     */
+    colorChoice() {
+        var colorSelector = document.getElementById('custon-config');
+        colorSelector.addEventListener('change', (e) => {
+            this.colorChosen = e.target.value;
+        });
+    };
+
+    /**
+     * initialisation du bouton et ajout d'un article dans le panier - alerte et stockage local
+     */
+    initAddToCart() {
+        let addCartBtn = document.getElementById('addcart');
+        addCartBtn.addEventListener('click', () => {
+            // regroupe les info utiles de l'article sélectionné pour mise en panier
+            let articleToAdd = [`${this.teddy.name}`, this.colorChosen, `${this.teddy.price}`]; //retirer synthaxe
+            let i = localStorage.length + 1;
+            // cas d'un article supprimé en milieu de numérotation
+            while (localStorage[`article${i}`] !== undefined) { 
+                i++;
+            };
+            //enregistrement local pour mise en panier
+            localStorage.setItem(`article${i}`, `${articleToAdd}`); 
+            alert('Nounours ajouté au panier');
+        });
+    };
 }
+new Product();

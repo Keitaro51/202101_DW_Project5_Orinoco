@@ -1,53 +1,130 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="author" content="Romain Charlot">
-    <meta name="description" content="Site de vente d'ours en peluches Orinounours - Page de panier - Projet 5 Formation développeur web Openclassrooms 2021">
-    <link rel="shortcut icon" href="./img/favicon.jpg" type="image/x-icon">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Orinounours - Panier</title>
+  <meta charset="utf-8">
+  <meta name="author" content="Romain Charlot">
+  <meta name="description"
+    content="Site de vente d'ours en peluches Orinounours - Page de panier - Projet 5 Formation développeur web Openclassrooms 2021">
+  <link rel="shortcut icon" href="./img/favicon.jpg" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="minifiedCSS.css">
+
+  <script type="text/javascript" src="./js/dataManager.js" defer></script>
+  <script type="text/javascript" src="./js/cart.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"
+    defer></script>
+
+  <title>Orinounours - Panier</title>
 </head>
 
 <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid col-4-sm">
-            <a class="navbar-brand" href="#">
-              <img src="./img/favicon.jpg" alt="logo ourson en peluche" width="30" height="24" class="d-inline-block align-top">
-              Orinounours
-            </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse col-8-sm" id="navbarNav">
-            <ul class="navbar-nav ">
-              <li class="nav-item">
-                <a class="nav-link" href="./index.html">Accueil</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Panier</a>
-              </li>
-            </ul>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid col-4-sm">
+        <a class="navbar-brand" href="#">
+          <img src="./img/favicon.jpg" alt="logo ourson en peluche" width="30" height="24"
+            class="d-inline-block align-top">
+          Orinounours
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse col-8-sm" id="navbarNav">
+          <ul class="navbar-nav ">
+            <li class="nav-item">
+              <a class="nav-link" href="./index.html">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Panier</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div id="cart_summary">
+      <h1>Votre panier</h1>
+
+      <table>
+        <caption>Résumé de votre shopping</caption>
+        <tr id="tableHeader">
+          <th class="article_col">Articles</th>
+          <th class="price_col">Prix <br>(en doudoullar)</th>
+          <th class="delete_col"></th>
+        </tr>
+      </table>
+      <button class="btn btn-primary" id="clearCartBtn">Vider le panier</button>
+    </div>
+    <hr>
+    <form id="form" class="row g-3" action="./confirm.html">
+      <p>*champ obligatoire</p>
+      <div class="col-md-4">
+        <label for="validationServer01" class="form-label">Prénom*</label>
+        <input type="text" class="form-control" id="validationServer01" required>
+        <div class="invalid-feedback">
+          Merci d'entrer votre prénom.
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="validationServer02" class="form-label">Nom*</label>
+        <input type="text" class="form-control" id="validationServer02" required>
+        <div class="invalid-feedback">
+          Merci d'entrer votre nom.
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="validationServerUsername" class="form-label">Email*</label>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend3">@</span>
+          <input type="email" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
+          <div id="validationServerUsernameFeedback" class="invalid-feedback">
+            Merci d'entrer un email valide.
           </div>
         </div>
-      </nav>
-    </header>
-
-    <main>
-      <div id="product_container"></div>
-      <p>test</p>
-    </main>
-
-    <footer >
-        <div class="container-fluid text-white text-center bg-primary"">
-         <p>Orinounours - Groupe Orinoco</p>
+      </div>
+      <div class="col-md-6">
+        <label for="validationServer03" class="form-label">Adresse*</label>
+        <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer03Feedback" required>
+        <div id="validationServer03Feedback" class="invalid-feedback">
+          Merci d'entrer votre adresse.
         </div>
-    </footer>
+      </div>
+      <div class="col-md-3">
+        <label for="validationServer05" class="form-label">Code Postal*</label>
+        <input type="text" class="form-control" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+        <div id="validationServer05Feedback" class="invalid-feedback">
+          Merci d'entrer votre code postal.
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+          <label class="form-check-label" for="invalidCheck3">
+            Accepter les CGU*
+          </label>
+          <div id="invalidCheck3Feedback" class="invalid-feedback">
+            You must agree before submitting.
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-primary" type="submit">Valider la commande</button>
+      </div>
+    </form>
+  </main>
 
-    <script src="./js/cart.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous" defer></script>
-</body>
+  <footer>
+    <div class="container-fluid text-white text-center bg-primary"">
+       <p>Orinounours - Groupe Orinoco</p>
+      </div>
+  </footer>
+
+    </body>
 </html>
