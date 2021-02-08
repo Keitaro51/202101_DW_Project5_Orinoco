@@ -5,6 +5,7 @@ h1{
     text-align: center;
     padding-top: 15px;
 }
+
 #product_container{
     display: flex;
     justify-content: space-around;
@@ -71,4 +72,16 @@ select {
 form{
     padding: 20px;
     margin:20px;
+}
+
+#confirm{
+    text-align:center;
+    span{
+        font-weight: bold;
+    }
+    a{
+       display:inline-block;
+       padding:0;
+    }
+
 }

@@ -18,4 +18,5 @@ async function showArticlesList(){
                 <a href="./product.html?${articlesList[i]._id}" class="btn btn-primary">Afficher</a>
             </div>`);
     };
+    dataManager.cartCounter();
 };

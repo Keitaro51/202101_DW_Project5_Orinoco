@@ -1,11 +1,15 @@
-let total = 0;
+const dataManager = new DataManager();
+
+total = 0;
 displayCart();
+dataManager.cartCounter();
 
 //affiche le contenu du panier stocké en local
 function displayCart() {
     console.log(localStorage);
 
     let boucle = localStorage.length+1;
+    let cartId = [];
     for (let i = 1; i < boucle; i++) {
         //récupération des info article
         let item = localStorage.getItem(`article${i}`);
@@ -18,6 +22,7 @@ function displayCart() {
             let name = splitItem[0];
             let color = splitItem[1];
             let price = parseInt(splitItem[2]);
+            let id = splitItem[3];
             total += price;
             document.querySelector('table').insertAdjacentHTML(
                 'beforeend',
@@ -25,7 +30,8 @@ function displayCart() {
                     <td>Ourson ${name} - Couleur : ${color}</td>
                     <td>${price}</td>
                     <td><img src="./img/trash.svg" id="${i}"></td>
-                </tr>`);       
+                </tr>`);
+                cartId.push(id); //à envoyer au post fetch
         };
     };
 };
@@ -55,33 +61,31 @@ document.getElementById('clearCartBtn').addEventListener('click', function () {
 });
 
 //bouton supprimer un article 
-//localStorage stocké combien de temps? fermeture nav? onglet? session? depend des param? local ou localStorage?
 let elt = document.querySelectorAll(`td img`);
 for(let i = 0;i<localStorage.length;i++){
     elt[i].onclick = function() {
-        //quand clic sur poubelle précise, alors regarder l'élément tr parent
-        let articleToDelete = elt[i].parentElement.parentElement;
-        //voir le n° de cet article
-        let idRemove = articleToDelete.getAttribute('id');
-        //suprimer cet article
-        localStorage.removeItem(idRemove); ////a tester sans différencier poubelle et grand parent!!!!!!!!
+        //voir l'id du bouton poubelle cliqué
+        let idToRemove = elt[i].getAttribute('id');
+        //supprimer l'article correspondant
+        localStorage.removeItem(`article${idToRemove}`);
         location.reload();
     };                                                
 };
 
-
 //après clic sur valider commande
-//récupération du contenu du formulaire
-    // let firstName = document.getElementById('validationServer01').value;
-    // let lastName = document.getElementById('validationServer02').value;
-    // let email = document.getElementById('validationServerUsername').value;
-    // let address = document.getElementById('validationServer03').value;
-    // let zip = document.getElementById('validationServer05').value;
-
+//récupération du contenu du formulaire*
    
-    // let input = document.getElementsByTagName('input');
-    // for(let i = 0; i < input.length-1;i++){  
-    //     input[i].addEventListener('input', function(){
+let input = document.getElementsByTagName('input');
+var formContent ={};
+    for(let i = 0; i < input.length-1;i++){  
+        input[i].addEventListener('change', function(){
+            let firstName = document.getElementById('validationServer01').value;
+            let lastName = document.getElementById('validationServer02').value;
+            let email = document.getElementById('validationServerUsername').value;
+            let address = document.getElementById('validationServer03').value;
+            let city = document.getElementById('validationServer05').value;
+            formContent={firstName, lastName, email, address, city}; //à envoyer au post fetch
+            console.log(formContent)    
     //         if(input[i].value == ""){ //si espace, ça valide
     //             input[i].classList.add('is-invalid');
     //             input[i].classList.remove('is-valid');
@@ -94,15 +98,12 @@ for(let i = 0;i<localStorage.length;i++){
     //             input[i].classList.remove('is-invalid');
     //             };
     //         }; 
-    //     });
-    // };
-
+        });
+    };
 
 let submitForm = document.getElementById('form');
 submitForm.addEventListener('submit', function(e){
     let confirm = window.confirm("Voulez vous vraiment soumettre les informations?");
-    console.log(confirm);
-    console.log(!confirm);
     if(!confirm){
         e.preventDefault();
     };

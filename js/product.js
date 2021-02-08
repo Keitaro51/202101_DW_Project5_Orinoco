@@ -32,8 +32,9 @@ class Product {
                 <label for="custon-config">Choisissez une couleur</label>
                     <select name="color" id="custon-config" required>         
                     </select>
-                <btn id="addcart" class="btn btn-primary">Ajouter au panier</btn>
+                <button id="addcart" class="btn btn-primary">Ajouter au panier</button>
             </div>`);
+        this.dataManager.cartCounter();
 
         //display all avaible colors in select element
         for (let color of this.teddy.colors) {
@@ -44,7 +45,7 @@ class Product {
 
         this.colorChoice();
 
-        this.initAddToCart();
+        this.addToCart(productId);
     };
 
     /**
@@ -60,11 +61,11 @@ class Product {
     /**
      * initialisation du bouton et ajout d'un article dans le panier - alerte et stockage local
      */
-    initAddToCart() {
+    addToCart(productId) {
         let addCartBtn = document.getElementById('addcart');
         addCartBtn.addEventListener('click', () => {
             // regroupe les info utiles de l'article sélectionné pour mise en panier
-            let articleToAdd = [`${this.teddy.name}`, this.colorChosen, `${this.teddy.price}`]; //retirer synthaxe
+            let articleToAdd = [`${this.teddy.name}`, this.colorChosen, `${this.teddy.price}`, productId];
             let i = localStorage.length + 1;
             // cas d'un article supprimé en milieu de numérotation
             while (localStorage[`article${i}`] !== undefined) { 
@@ -73,6 +74,8 @@ class Product {
             //enregistrement local pour mise en panier
             localStorage.setItem(`article${i}`, `${articleToAdd}`); 
             alert('Nounours ajouté au panier');
+            //mise à jour du compteur d'article dans le panier dans la nav bar
+            this.dataManager.cartCounter();
         });
     };
 }

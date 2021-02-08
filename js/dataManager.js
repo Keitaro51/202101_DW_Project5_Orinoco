@@ -1,5 +1,5 @@
 class DataManager {
-    
+
     /**
      * l'adresse du serveur
      * @type {String|null}
@@ -24,8 +24,13 @@ class DataManager {
     async getAllProducts() {
         if (this.products === null) {
             this.products = await fetch(this.src);
-            this.products = await this.products.json();
+            if (this.products.ok) {
+                this.products = await this.products.json();
+            } else {
+                alert('Erreur : ' + this.products.status); //marche pas si serveur deco try catch?
+            }
         }
+        console.log(this.products)
         return this.products; //si liste présente mais pas à jour? combien de temps et ou les données restent?
     }
 
@@ -36,18 +41,51 @@ class DataManager {
      *
      * @return  {Object}             les spécifications du produit
      */
-    async getProductInfo(idProduct) {
+    
+     async getProductInfo(idProduct) {
         if (this.products !== null) {
             for (let i = 0; i < this.products.length; i++) {
                 if (idProduct === this.products[i]._id) {
-                   return this.products[i];
+                    return this.products[i];
                 };
             };
         }
-        let productInfo = await fetch(this.src+idProduct);
-        productInfo     = await productInfo.json();
+        let productInfo = await fetch(this.src + idProduct);
+        productInfo = await productInfo.json();
         if (this.products === null) this.products = [];
         this.products.push(productInfo);
+        console.log(productInfo)
         return productInfo;
+    }
+
+ //test de creation d'objet pour requete
+ 
+
+    /**
+    * récupère les info formulaire, le panier et renvoi un numéro de commande
+    * @param   {object}  contact  info contact du formulaire
+    * @param   {array}  products  tableau d'id des produits commandés
+    * @return  {Object}           info passées plus n° de commande
+    * */
+
+    async postOrderRequest(contact, products) {
+        var orderConfirm = await fetch(this.src + 'order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ contact, products })
+        });
+        orderConfirm = await orderConfirm.json();
+        console.log(orderConfirm)
+        return orderConfirm;
+    };
+
+    /**
+     * affiche et met à jour le nombre d'article dans le panier dans la barre de navigation
+     *
+     */
+    cartCounter() {
+        document.querySelector('#cart').innerText = `Panier (${localStorage.length})`;
     }
 }
