@@ -5,12 +5,21 @@ class ConfirmOrder{
     
     constructor() {
         this.dataManager = new DataManager();
-        this.confirmOrder();
+        //this.confirmOrder();
     }
     
-    async confirmOrder() {
-        this.response = await this.dataManager.postOrderRequest({firstName: `Prénom`, lastName:'Nom',address: 'chez wam',city:'Reims', email:'moi@moi.fr'},
-        ['5be9c8541c9d440000665243','5be9c8541c9d440000665243']);
+    /**
+     * récupère l'id de commande généré et construit la page de confirmation
+     *
+     * @param   {object}  formContent  formulaire de contact
+     * @param   {Array}  cartContent  contenu du panier (id seulement)
+     *
+     * @return  {[type]}               [return description]
+     */
+    async confirmOrder(formContent, cartContent) {
+        console.log("page confirm ");
+        console.log(formContent, cartContent);
+        this.response = await this.dataManager.postOrderRequest(formContent, cartContent);
         console.log(this.response)
         document.getElementsByTagName("h1")[0].innerText = "Félicitation " /*+ this.response.contact.firstName*/;
         

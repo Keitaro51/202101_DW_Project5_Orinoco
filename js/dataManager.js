@@ -30,7 +30,6 @@ class DataManager {
                 alert('Erreur : ' + this.products.status); //marche pas si serveur deco try catch?
             }
         }
-        console.log(this.products)
         return this.products; //si liste présente mais pas à jour? combien de temps et ou les données restent?
     }
 
@@ -54,7 +53,6 @@ class DataManager {
         productInfo = await productInfo.json();
         if (this.products === null) this.products = [];
         this.products.push(productInfo);
-        console.log(productInfo)
         return productInfo;
     }
 
@@ -69,17 +67,19 @@ class DataManager {
     * */
 
     async postOrderRequest(contact, products) {
-        var orderConfirm = await fetch(this.src + 'order', {
+        console.log(contact, products)
+        let orderConfirm = await fetch(this.src + 'order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ contact, products })
         });
-        orderConfirm = await orderConfirm.json();
         console.log(orderConfirm)
+        orderConfirm = await orderConfirm.json();
+        console.log(orderConfirm);  //ne fonctionne pas
         return orderConfirm;
-    };
+    }
 
     /**
      * affiche et met à jour le nombre d'article dans le panier dans la barre de navigation

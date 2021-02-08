@@ -21,19 +21,13 @@ class Product {
         this.teddy = await this.dataManager.getProductInfo(productId);
         //enregistre la valeur sélectionnée par défaut au lancement de la page
         this.colorChosen = this.teddy.colors[0]; 
-        document.getElementById('main').insertAdjacentHTML('afterbegin', `<h1>Bonjour, je suis ${this.teddy.name.split(' ')[0]}. Tu veux être mon ami?</h1>`);
-        document.getElementById('product_container').insertAdjacentHTML(
-            'beforeend',
-            `<div class="card">
-                <img src="${this.teddy.imageUrl}" lazy class="card-img-top" alt="Nounours super classe">
-                <h2 class="card-title">${this.teddy.name}</h2>
-                <p class="card-text">${this.teddy.description}</p>
-                <p class="card-text">Prix : ${this.teddy.price} Doudoullars</p>
-                <label for="custon-config">Choisissez une couleur</label>
-                    <select name="color" id="custon-config" required>         
-                    </select>
-                <button id="addcart" class="btn btn-primary">Ajouter au panier</button>
-            </div>`);
+        
+        document.getElementsByTagName('h1')[0].textContent=`Bonjour, je suis ${this.teddy.name.split(' ')[0]}. Tu veux être mon ami?`;
+        document.querySelector('.card-img-top').setAttribute(`src`, `${this.teddy.imageUrl}`)
+        document.getElementsByTagName('h2')[0].textContent = `${this.teddy.name}`;
+        document.querySelectorAll('p')[0].textContent =`${this.teddy.description}`;
+        document.querySelectorAll('p')[1].textContent =`Prix : ${this.teddy.price} Doudoullars`;       
+        
         this.dataManager.cartCounter();
 
         //display all avaible colors in select element
