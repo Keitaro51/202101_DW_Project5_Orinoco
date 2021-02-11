@@ -31,11 +31,9 @@ footer{
         margin-bottom: 0;
     }
 }
-
 select {
     margin: 10px;
 }
-
 #cart_summary{
     text-align: center;
     table{
@@ -73,7 +71,6 @@ form{
     padding: 20px;
     margin:20px;
 }
-
 #confirm{
     text-align:center;
     span{
@@ -83,5 +80,7 @@ form{
        display:inline-block;
        padding:0;
     }
-
+    p{
+        margin:20px;
+    }
 }

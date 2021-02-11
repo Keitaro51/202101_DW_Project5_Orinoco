@@ -1,40 +1,11 @@
-const dataManager = new DataManager();
 
-total = 0;
-displayCart();
+
+const dataManager = new DataManager();
 dataManager.cartCounter();
 
-//affiche le contenu du panier stocké en local
-function displayCart() {
-    console.log(localStorage);
-
-    let boucle = localStorage.length+1;
-    let cartId = [];
-    for (let i = 1; i < boucle; i++) {
-        //récupération des info article
-        let item = localStorage.getItem(`article${i}`);
-        //si article manquant dans liste (ex : art1, art2, null, art4)
-        if(item === null){
-            boucle++;
-        }else{
-            //info articles concaténées dans localStorage => split puis affectation
-            let splitItem = item.split(",");
-            let name = splitItem[0];
-            let color = splitItem[1];
-            let price = parseInt(splitItem[2]);
-            let id = splitItem[3];
-            total += price;
-            document.querySelector('table').insertAdjacentHTML(
-                'beforeend',
-                `<tr id="article${i}">
-                    <td>Ourson ${name} - Couleur : ${color}</td>
-                    <td>${price}</td>
-                    <td><img src="./img/trash.svg" id="${i}"></td>
-                </tr>`);
-                cartId.push(id); //à envoyer au post fetch
-        };
-    };
-};
+total = 0;
+const cart = new Cart();
+let cartContent = cart.displayCart();
 
 //calcul du total
 document.querySelector('table').insertAdjacentHTML(
@@ -72,39 +43,48 @@ for(let i = 0;i<localStorage.length;i++){
     };                                                
 };
 
-//après clic sur valider commande
-//récupération du contenu du formulaire*
-   
+
+//récupération du contenu du formulaire 
 let input = document.getElementsByTagName('input');
 var formContent ={};
-    for(let i = 0; i < input.length-1;i++){  
-        input[i].addEventListener('change', function(){
-            let firstName = document.getElementById('validationServer01').value;
-            let lastName = document.getElementById('validationServer02').value;
-            let email = document.getElementById('validationServerUsername').value;
-            let address = document.getElementById('validationServer03').value;
-            let city = document.getElementById('validationServer05').value;
-            formContent={firstName, lastName, email, address, city}; //à envoyer au post fetch
-            console.log(formContent)    
-    //         if(input[i].value == ""){ //si espace, ça valide
-    //             input[i].classList.add('is-invalid');
-    //             input[i].classList.remove('is-valid');
-    //         }else{
-    //             if(i===2 && input[i].value!==/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i){ //regex format email, marche pas
-    //                 input[i].classList.add('is-invalid');
-    //                 input[i].classList.remove('is-valid');
-    //             }else{
-    //             input[i].classList.add('is-valid');
-    //             input[i].classList.remove('is-invalid');
-    //             };
-    //         }; 
-        });
-    };
+for(let i = 0; i < input.length-1;i++){  
+    input[i].addEventListener('change', function(){
+        let firstName = document.getElementById('validationServer01').value;
+        let lastName = document.getElementById('validationServer02').value;
+        let address = document.getElementById('validationServer03').value;
+        let city = document.getElementById('validationServer05').value;
+        let email = document.getElementById('validationServerUsername').value;    
+        formContent={firstName, lastName, address, city, email}; //à envoyer au post fetch   
+//tests validation champ
+//          if(input[i].value == ""){ //si espace, ça valide?
+//             input[i].classList.add('is-invalid');
+//             input[i].classList.remove('is-valid');
+//         }else{
+//             if(i===2 && input[i].value !== /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i){ //regex format email, marche pas
+//                 input[i].classList.add('is-invalid');
+//                 input[i].classList.remove('is-valid');
+//             }else{
+//             input[i].classList.add('is-valid');
+//             input[i].classList.remove('is-invalid');
+//             };
+//         }; 
+    });
+};
 
+//validation commande
 let submitForm = document.getElementById('form');
 submitForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    e.stopPropagation();
     let confirm = window.confirm("Voulez vous vraiment soumettre les informations?");
     if(!confirm){
-        e.preventDefault();
-    };
+        return;
+    }
+   submit(formContent, cartContent);
 });
+
+async function submit (formContent, cartContent){
+    const response = await dataManager.postOrderRequest(formContent, cartContent);
+    dataManager.saveOrder(response.orderId, response.contact, total);
+    window.location = "./confirm.html?"+response.orderId;
+}

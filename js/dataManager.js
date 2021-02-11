@@ -30,7 +30,6 @@ class DataManager {
                 alert('Erreur : ' + this.products.status); //marche pas si serveur deco try catch?
             }
         }
-        console.log(this.products)
         return this.products; //si liste présente mais pas à jour? combien de temps et ou les données restent?
     }
 
@@ -54,12 +53,8 @@ class DataManager {
         productInfo = await productInfo.json();
         if (this.products === null) this.products = [];
         this.products.push(productInfo);
-        console.log(productInfo)
         return productInfo;
     }
-
- //test de creation d'objet pour requete
- 
 
     /**
     * récupère les info formulaire, le panier et renvoi un numéro de commande
@@ -74,12 +69,11 @@ class DataManager {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ contact, products })
+            body: JSON.stringify ({contact, products})
         });
         orderConfirm = await orderConfirm.json();
-        console.log(orderConfirm)
         return orderConfirm;
-    };
+    }
 
     /**
      * affiche et met à jour le nombre d'article dans le panier dans la barre de navigation
@@ -87,5 +81,18 @@ class DataManager {
      */
     cartCounter() {
         document.querySelector('#cart').innerText = `Panier (${localStorage.length})`;
+    }
+
+    saveOrder(idOrder, orderInfo, total){
+        sessionStorage.setItem(idOrder, JSON.stringify({...orderInfo, "total" : total}));
+    }
+
+    getOrder(id){
+        return JSON.parse(sessionStorage.getItem(id));
+    }
+
+    clearLocalData(){
+        localStorage.clear();
+        sessionStorage.clear();
     }
 }
