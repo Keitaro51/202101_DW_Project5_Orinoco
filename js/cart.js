@@ -1,10 +1,11 @@
-total = 0;
+
 
 const dataManager = new DataManager();
 dataManager.cartCounter();
 
+total = 0;
 const cart = new Cart();
-let cartContent = cart.displayCart();   ////objet et pas tableau
+let cartContent = cart.displayCart();
 
 //calcul du total
 document.querySelector('table').insertAdjacentHTML(
@@ -42,9 +43,8 @@ for(let i = 0;i<localStorage.length;i++){
     };                                                
 };
 
-//après clic sur valider commande
-//récupération du contenu du formulaire*
-   
+
+//récupération du contenu du formulaire 
 let input = document.getElementsByTagName('input');
 var formContent ={};
 for(let i = 0; i < input.length-1;i++){  
@@ -54,14 +54,13 @@ for(let i = 0; i < input.length-1;i++){
         let address = document.getElementById('validationServer03').value;
         let city = document.getElementById('validationServer05').value;
         let email = document.getElementById('validationServerUsername').value;    
-        formContent={firstName, lastName, address, city, email}; //à envoyer au post fetch
-        console.log(formContent)    
+        formContent={firstName, lastName, address, city, email}; //à envoyer au post fetch   
 //tests validation champ
-//          if(input[i].value == ""){ //si espace, ça valide
+//          if(input[i].value == ""){ //si espace, ça valide?
 //             input[i].classList.add('is-invalid');
 //             input[i].classList.remove('is-valid');
 //         }else{
-//             if(i===2 && input[i].value!==/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i){ //regex format email, marche pas
+//             if(i===2 && input[i].value !== /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i){ //regex format email, marche pas
 //                 input[i].classList.add('is-invalid');
 //                 input[i].classList.remove('is-valid');
 //             }else{
@@ -72,18 +71,20 @@ for(let i = 0; i < input.length-1;i++){
     });
 };
 
+//validation commande
 let submitForm = document.getElementById('form');
 submitForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    e.stopPropagation();
     let confirm = window.confirm("Voulez vous vraiment soumettre les informations?");
     if(!confirm){
-        e.preventDefault();
+        return;
     }
-    submit()   
+   submit(formContent, cartContent);
 });
 
-async function submit(){
-    console.log("page cart ") 
-    console.log(formContent, cartContent);
-    const submitOrder = new ConfirmOrder();
-    await submitOrder.confirmOrder(formContent , cartContent);
+async function submit (formContent, cartContent){
+    const response = await dataManager.postOrderRequest(formContent, cartContent);
+    dataManager.saveOrder(response.orderId, response.contact, total);
+    window.location = "./confirm.html?"+response.orderId;
 }

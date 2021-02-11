@@ -56,9 +56,6 @@ class DataManager {
         return productInfo;
     }
 
- //test de creation d'objet pour requete
- 
-
     /**
     * récupère les info formulaire, le panier et renvoi un numéro de commande
     * @param   {object}  contact  info contact du formulaire
@@ -67,17 +64,14 @@ class DataManager {
     * */
 
     async postOrderRequest(contact, products) {
-        console.log(contact, products)
-        let orderConfirm = await fetch(this.src + 'order', {
+        var orderConfirm = await fetch(this.src + 'order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ contact, products })
+            body: JSON.stringify ({contact, products})
         });
-        console.log(orderConfirm)
         orderConfirm = await orderConfirm.json();
-        console.log(orderConfirm);  //ne fonctionne pas
         return orderConfirm;
     }
 
@@ -87,5 +81,18 @@ class DataManager {
      */
     cartCounter() {
         document.querySelector('#cart').innerText = `Panier (${localStorage.length})`;
+    }
+
+    saveOrder(idOrder, orderInfo, total){
+        sessionStorage.setItem(idOrder, JSON.stringify({...orderInfo, "total" : total}));
+    }
+
+    getOrder(id){
+        return JSON.parse(sessionStorage.getItem(id));
+    }
+
+    clearLocalData(){
+        localStorage.clear();
+        sessionStorage.clear();
     }
 }

@@ -6,8 +6,6 @@ class Cart{
      * @return  {Array}  id des produits du panier
      */
     displayCart() {
-        console.log(localStorage);
-    
         let boucle = localStorage.length+1;
         let cartId = [];
         for (let i = 1; i < boucle; i++) {
@@ -21,7 +19,7 @@ class Cart{
                 let splitItem = item.split(",");
                 let name = splitItem[0];
                 let color = splitItem[1];
-                let price = parseInt(splitItem[2]);
+                let price = (parseInt(splitItem[2])/100); //prix en cts dans API (évite problèmes d'arrondis), ramené en doudoullars
                 let id = splitItem[3];
                 total += price;
                 document.querySelector('table').insertAdjacentHTML(

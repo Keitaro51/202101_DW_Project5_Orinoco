@@ -14,8 +14,7 @@ class Product {
      */
     async showProduct() {
         //find article id in URL
-        const hash = window.location.search;
-        const productId = hash.substr(1);
+        const productId = window.location.search.slice(1);
 
         //retrieve product info from id
         this.teddy = await this.dataManager.getProductInfo(productId);
@@ -26,8 +25,8 @@ class Product {
         document.querySelector('.card-img-top').setAttribute(`src`, `${this.teddy.imageUrl}`)
         document.getElementsByTagName('h2')[0].textContent = `${this.teddy.name}`;
         document.querySelectorAll('p')[0].textContent =`${this.teddy.description}`;
-        document.querySelectorAll('p')[1].textContent =`Prix : ${this.teddy.price} Doudoullars`;       
-        
+        document.querySelectorAll('p')[1].textContent =`Prix : ${this.teddy.price} Doudoullars`;
+
         this.dataManager.cartCounter();
 
         //display all avaible colors in select element
