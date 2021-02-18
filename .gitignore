@@ -1,3 +1,4 @@
 *.pdf
 node_modules
 .eslintrc.js
+*.drawio
