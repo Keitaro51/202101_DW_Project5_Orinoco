@@ -7,7 +7,17 @@ class PageManager{
 
     definePage(currentPage){
         console.log("currentPage",currentPage, currentPage.slice(0,7))
-        if(currentPage === "") return new ProductList();
+
+        /**
+        switch (true) {
+            case currentPage === "":
+                return new ProductList();
+            case currentPage.slice(0,8) === "product_":
+                return new ProductSelected(currentPage.slice(8));
+        }
+        */
+
+        if (currentPage === "") return new ProductList();
         // if(currentPage === "confirm") return new ProductList();
         if (currentPage.slice(0,8) === "product_") return new ProductSelected(currentPage.slice(8));
     }
