@@ -91,6 +91,11 @@ class DataManager {
         return JSON.parse(sessionStorage.getItem(id));
     }
 
+
+    /**
+     * vide le stockage local après confirmation commande
+     *
+     */
     clearLocalData(){
         localStorage.clear();
         sessionStorage.clear();

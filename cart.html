@@ -70,14 +70,14 @@
       <p>*champ obligatoire</p>
       <div class="col-md-4">
         <label for="validationServer01" class="form-label">Prénom*</label>
-        <input type="text" class="form-control" id="validationServer01" required>
+        <input type="text" class="form-control" id="validationServer01" maxlength="50" required oninput="validInput(this)" pattern="[a-zA-Z -]*">
         <div class="invalid-feedback">
           Merci d'entrer votre prénom.
         </div>
       </div>
       <div class="col-md-4">
         <label for="validationServer02" class="form-label">Nom*</label>
-        <input type="text" class="form-control" id="validationServer02" required>
+        <input type="text" class="form-control" id="validationServer02" maxlength="50" required oninput="validInput(this)" pattern="[a-zA-Z -]*">
         <div class="invalid-feedback">
           Merci d'entrer votre nom.
         </div>
@@ -86,7 +86,7 @@
         <label for="validationServerUsername" class="form-label">Email*</label>
         <div class="input-group has-validation">
           <span class="input-group-text" id="inputGroupPrepend3">@</span>
-          <input type="email" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
+          <input type="email" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" maxlength="40" required oninput="validInput(this)" pattern="/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i">
           <div id="validationServerUsernameFeedback" class="invalid-feedback">
             Merci d'entrer un email valide.
           </div>
@@ -94,21 +94,21 @@
       </div>
       <div class="col-md-6">
         <label for="validationServer03" class="form-label">Adresse*</label>
-        <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer03Feedback" required>
+        <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer03Feedback" maxlength="30" required oninput="validInput(this)">
         <div id="validationServer03Feedback" class="invalid-feedback">
           Merci d'entrer votre adresse.
         </div>
       </div>
       <div class="col-md-3">
         <label for="validationServer05" class="form-label">Ville*</label>
-        <input type="text" class="form-control" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+        <input type="text" class="form-control" id="validationServer05" aria-describedby="validationServer05Feedback" maxlength="30" required oninput="validInput(this)" pattern="[a-zA-Z -]*">
         <div id="validationServer05Feedback" class="invalid-feedback">
           Merci d'entrer votre ville.
         </div>
       </div>
       <div class="col-12">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+          <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required oninput="validInput(this)">
           <label class="form-check-label" for="invalidCheck3">
             Accepter les CGU*
           </label>

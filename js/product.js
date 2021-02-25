@@ -25,7 +25,7 @@ class Product {
         document.querySelector('.card-img-top').setAttribute(`src`, `${this.teddy.imageUrl}`)
         document.getElementsByTagName('h2')[0].textContent = `${this.teddy.name}`;
         document.querySelectorAll('p')[0].textContent =`${this.teddy.description}`;
-        document.querySelectorAll('p')[1].textContent =`Prix : ${this.teddy.price} Doudoullars`;
+        document.querySelectorAll('p')[1].textContent =`Prix : ${this.teddy.price/100} Doudoullars`;
 
         this.dataManager.cartCounter();
 
