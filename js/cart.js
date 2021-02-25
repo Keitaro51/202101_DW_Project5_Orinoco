@@ -54,10 +54,10 @@ submitForm.addEventListener('submit', function (e) {
     if (!confirm) {
         return;
     }
-    submit(formContent, cartContent);
+    submit(cartContent);
 });
 
-async function submit(formContent, cartContent) {
+async function submit(cartContent) {
     formContent = {
         "firstName" : document.getElementById('validationServer01').value,
         "lastName" : document.getElementById('validationServer02').value,

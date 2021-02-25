@@ -86,7 +86,7 @@
         <label for="validationServerUsername" class="form-label">Email*</label>
         <div class="input-group has-validation">
           <span class="input-group-text" id="inputGroupPrepend3">@</span>
-          <input type="email" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" maxlength="40" required oninput="validInput(this)" pattern="/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i">
+          <input type="email" class="form-control" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" maxlength="40" required oninput="validInput(this)" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}$">
           <div id="validationServerUsernameFeedback" class="invalid-feedback">
             Merci d'entrer un email valide.
           </div>
