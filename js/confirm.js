@@ -14,18 +14,18 @@ document.getElementById("idNbr").innerText = orderId;
 dataManager.clearLocalData();
 
 //redirection sur page d'accueil pour acheter encore plus de nounours
-setTimeout(function () { window.location = './index.html'; }, secondes * 1000);
+setTimeout(function () { window.location = "./index.html"; }, secondes * 1000);
 changeTimeValue();
-timer = setInterval(changeTimeValue, 1000);
+let timer = setInterval(changeTimeValue, 1000);
 
 
 function changeTimeValue() {
     if (secondes > 1) {
-        document.getElementById('compteur').innerHTML = secondes + ' secondes';
+        document.getElementById("compteur").innerHTML = secondes + " secondes";
     }
 
     else if (secondes >= 0) {
-        document.getElementById('compteur').innerHTML = secondes + ' seconde';
+        document.getElementById("compteur").innerHTML = secondes + " seconde";
     }
 
     else {

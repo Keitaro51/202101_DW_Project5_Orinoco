@@ -27,7 +27,7 @@ class DataManager {
             if (this.products.ok) {
                 this.products = await this.products.json();
             } else {
-                alert('Erreur : ' + this.products.status); //marche pas si serveur deco try catch?
+                alert('Erreur : ' + this.products.status);
             }
         }
         return this.products; //si liste présente mais pas à jour? combien de temps et ou les données restent?

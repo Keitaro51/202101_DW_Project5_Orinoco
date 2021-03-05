@@ -22,16 +22,16 @@ class Cart{
                 let price = (parseInt(splitItem[2])/100); //prix en cts dans API (évite problèmes d'arrondis), ramené en doudoullars
                 let id = splitItem[3];
                 total += price;
-                document.querySelector('table').insertAdjacentHTML(
-                    'beforeend',
+                document.querySelector("table").insertAdjacentHTML(
+                    "beforeend",
                     `<tr id="article${i}">
                         <td>Ourson ${name} - Couleur : ${color}</td>
                         <td>${price}</td>
                         <td><img src="./img/trash.svg" id="${i}"></td>
                     </tr>`);
                 cartId.push(id); //à envoyer au post fetch
-            };
-        };
+            }
+        }
         return cartId;
-    };
+    }
 }
